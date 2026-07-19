@@ -1,0 +1,33 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled executable files
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.stackdump
+
+# Backup files
+*~
+*.swp
+*.swo
+
+# VS Code settings
+.vscode/settings.json   # ignore personal settings
+# If you want to ignore the entire .vscode folder, uncomment this line
+# .vscode/
+
+# CMake build folders (if using CMake)
+build/
+cmake-build-*/
+
+# Others
+*.log
+*.tmp
+
+
+.vscode/
