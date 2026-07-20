@@ -153,6 +153,35 @@ bool registerUser()
 
 }
 
+bool loginUser()
+{
+    string useremail, userpassword;
+    string email,password;
+
+    cout << "\n========== User Login ==========\n";
+
+    cout << "Username: ";
+    cin >> useremail;
+
+    cout << "Password: ";
+    cin >> userpassword;
+
+    ifstream file("users.txt");
+
+    while (file >> email >> password)
+    {
+        if (useremail == email && userpassword == password)
+        {
+            cout << "\nLogin Successful!\n";
+            return true;
+        }
+    }
+
+    cout << "\nInvalid Username or Password!\n";
+
+    return false;
+}
+
 int main() {
 
     int option;
@@ -161,7 +190,7 @@ int main() {
     {
         cout << "\n=========== Railway Login System ===========" << endl;
         cout << "1. Register" << endl;
-        // cout << "2. Login" << endl;
+        cout << "2. Login" << endl;
         cout << "3. Exit" << endl;
 
         cout << "Enter choice: ";
@@ -174,10 +203,13 @@ int main() {
                 break;
             }
         }
-        // else if (option == 2)
-        // {
-        //     cout<<"Coming Soon";
-        // }
+        else if (option == 2)
+        {
+            if(loginUser())
+            {
+                break;
+            }
+        }
         else if (option == 3)
         {
             cout << "Thank you for using the Railway Management System. Goodbye!" << endl;   
@@ -189,7 +221,6 @@ int main() {
         }
     }
     
-
 
     const int maxTrains = 3;
     const int maxPassengers = 100;
