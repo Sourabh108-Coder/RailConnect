@@ -184,6 +184,8 @@ bool loginUser()
 
 int main() {
 
+    // Login Register Functionality Implementation
+
     int option;
 
     while (true)
@@ -222,6 +224,8 @@ int main() {
     }
     
 
+    // RailConnect System Implementation
+    
     const int maxTrains = 3;
     const int maxPassengers = 100;
     Train trains[maxTrains] = {
