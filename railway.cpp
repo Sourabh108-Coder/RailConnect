@@ -2,6 +2,9 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <limits>
+
+
 using namespace std;
 class Ticket {
 public:
@@ -103,7 +106,91 @@ void readPassengersFromFile(Passenger* passengers, int& numPassengers, Train tra
     }
     inputFile.close();
 }
+
+bool emailExists(string email)
+{
+    ifstream file("users.txt");
+    string mail, pass;
+
+    while (file >> mail >> pass)
+    {
+        if ( mail == email)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool registerUser()
+{
+    string email,password;
+
+    cout << "\n===== User Registration =====\n";
+
+    cout << "Enter Email: ";
+    cin >> email;
+
+    if(emailExists(email))
+    {
+       cout << "Email already exists!\n";
+       return false;
+    }
+
+    cout << "Enter Password: ";
+    cin >> password;
+
+    ofstream file("users.txt", ios::app);
+
+    file << email << " " << password << endl;
+
+    file.close();
+
+    cout << "Registration Successful!\n";
+    return true;
+
+}
+
 int main() {
+
+    int option;
+
+    while (true)
+    {
+        cout << "\n=========== Railway Login System ===========" << endl;
+        cout << "1. Register" << endl;
+        // cout << "2. Login" << endl;
+        cout << "3. Exit" << endl;
+
+        cout << "Enter choice: ";
+        cin >> option;
+
+        if (option == 1)
+        {
+            if(registerUser())
+            {
+                break;
+            }
+        }
+        // else if (option == 2)
+        // {
+        //     cout<<"Coming Soon";
+        // }
+        else if (option == 3)
+        {
+            cout << "Thank you for using the Railway Management System. Goodbye!" << endl;   
+            return 0;
+        }
+        else
+        {
+          cout << "Invalid Choice!" << endl;
+        }
+    }
+    
+
+
     const int maxTrains = 3;
     const int maxPassengers = 100;
     Train trains[maxTrains] = {
