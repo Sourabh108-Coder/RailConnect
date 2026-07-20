@@ -147,8 +147,6 @@ These can be improved in future versions.
 ---
 
 ## 🔮 Future Improvements
-
-* Login and authentication
 * Unique booking ID or PNR generation
 * Train management (Add, Edit, Delete)
 * Admin dashboard
