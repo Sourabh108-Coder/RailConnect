@@ -42,6 +42,8 @@ public:
         : Ticket(n), age(a), gender(g), seatNumber(seat), phoneNumber(phone), bookedTrain(train) {}
 };
 
+// Function for loading trains data
+
 void loadTrains(Train trains[], int &numTrains)
 {
     ifstream file("trains.txt");
