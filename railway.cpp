@@ -278,7 +278,7 @@ int main() {
     Train trains[maxTrains];
     int numTrains = 0;
 
-    loadTrains(trains, numTrains);
+    loadTrains(trains, numTrains); // Trains loaded
 
 
     Passenger* passengers = new Passenger[maxPassengers];
