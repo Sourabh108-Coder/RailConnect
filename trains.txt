@@ -1,0 +1,3 @@
+Indian Railways,Amritsar,Delhi,100
+Rajdhani Express,Amritsar,Bareilly,150
+Humsafar Express,Amritsar,Chennai,80

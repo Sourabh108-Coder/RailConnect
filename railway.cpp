@@ -19,6 +19,14 @@ public:
     int totalSeats;
     int availableSeats;
 
+    Train() : Ticket("")
+    {
+        source = "";
+        destination = "";
+        totalSeats = 0;
+        availableSeats = 0;
+    }
+
     Train(string n, string src, string dest, int seats)
         : Ticket(n), source(src), destination(dest), totalSeats(seats), availableSeats(seats) {}
 };
@@ -33,6 +41,42 @@ public:
     Passenger(string n, int a, string g, int seat, string phone, Train* train)
         : Ticket(n), age(a), gender(g), seatNumber(seat), phoneNumber(phone), bookedTrain(train) {}
 };
+
+void loadTrains(Train trains[], int &numTrains)
+{
+    ifstream file("trains.txt");
+
+    if (!file)
+    {
+        cout << "Unable to open trains.txt\n";
+        return;
+    }
+
+    string line;
+
+    numTrains = 0;
+
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+
+        string name, source, destination;
+        int seats;
+
+        getline(ss, name, ',');
+        getline(ss, source, ',');
+        getline(ss, destination, ',');
+
+        ss >> seats;
+
+        trains[numTrains++] = Train(name, source, destination, seats);
+
+    }
+
+    file.close();
+}
+
+
 int displayMenu() {
     int choice;
     cout << "\n\nRailway Management System" << endl;
@@ -226,28 +270,30 @@ int main() {
 
     // RailConnect System Implementation
     
-    const int maxTrains = 3;
+    const int maxTrains = 50;  //Add acc. to your choice
     const int maxPassengers = 100;
-    Train trains[maxTrains] = {
-        Train("Indian Railways  ", "Amritsar", "Delhi    ", 100),
-        Train("Rajdhani Express", "Amritsar", "Bareilly", 150),
-        Train("Humsafar Express", "Amritsar", "Chennai ", 80)
-    };
+
+    Train trains[maxTrains];
+    int numTrains = 0;
+
+    loadTrains(trains, numTrains);
+
+
     Passenger* passengers = new Passenger[maxPassengers];
     int numPassengers = 0;
-    readPassengersFromFile(passengers, numPassengers, trains, maxTrains);
+    readPassengersFromFile(passengers, numPassengers, trains, numTrains);
     while (true) {
         int choice = displayMenu();
         switch (choice) {
             case 1:
-                displayAvailableTrains(trains, maxTrains);
+                displayAvailableTrains(trains, numTrains);
                 break;
             case 2: {
-                displayAvailableTrains(trains, maxTrains);
+                displayAvailableTrains(trains, numTrains);
                 int trainChoice;
                 cout << "Enter the number of the train you want to book: ";
                 cin >> trainChoice;
-                if (trainChoice >= 1 && trainChoice <= maxTrains) {
+                if (trainChoice >= 1 && trainChoice <= numTrains) {
                     Train& selectedTrain = trains[trainChoice - 1];
                     if (selectedTrain.availableSeats > 0) {
                         string name, gender, phone;
