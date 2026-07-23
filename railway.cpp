@@ -155,6 +155,24 @@ void readPassengersFromFile(Passenger* passengers, int& numPassengers, Train tra
     inputFile.close();
 }
 
+bool validEmailFormat(string email)
+{
+    // Check spaces
+    if(email.find(' ') != string::npos)
+    {
+        return false;
+    }
+
+    // Check @ and .
+    if(email.find('@') == string::npos || email.find('.') == string::npos)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+
 bool emailExists(string email)
 {
     ifstream file("users.txt");
@@ -178,8 +196,19 @@ bool registerUser()
 
     cout << "\n===== User Registration =====\n";
 
-    cout << "Enter Email: ";
-    cin >> email;
+    while(true)
+    {
+        cout << "Enter Email: ";
+        cin >> email;
+
+        if(!validEmailFormat(email))
+        {
+            cout << "Invalid email. Email should not contain spaces and must contain @ and .\n";
+            continue;
+        }
+
+        break;
+    }
 
     if(emailExists(email))
     {
@@ -208,8 +237,19 @@ bool loginUser()
 
     cout << "\n========== User Login ==========\n";
 
-    cout << "Username: ";
-    cin >> useremail;
+    while(true)
+    {
+        cout << "Username: ";
+        cin >> useremail;
+
+        if(!validEmailFormat(useremail))
+        {
+            cout << "Invalid email format. Try again.\n";
+            continue;
+        }
+
+        break;
+    }
 
     cout << "Password: ";
     cin >> userpassword;
@@ -403,7 +443,7 @@ int main() {
                         age = getValidAge();
                         gender = getValidGender();
                         phone = getValidPhone();
-                        
+
                         int seatNumber = 0;
                         for (int i = 0; i < maxPassengers; ++i) {
                             if (passengers[i].bookedTrain == &selectedTrain && passengers[i].seatNumber > seatNumber) {
