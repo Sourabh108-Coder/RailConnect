@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
+#include <algorithm>
+#include <cctype>
 
 
 using namespace std;
@@ -228,6 +230,81 @@ bool loginUser()
     return false;
 }
 
+int getValidAge()
+{
+    int age;
+
+    while (true)
+    {
+        cout << "Enter your age: ";
+        cin >> age;
+
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "Invalid input.\n";
+            continue;
+        }
+
+        if(age >= 1 && age <= 120)
+            return age;
+
+        cout << "Enter a valid age (1-120).\n";
+    }
+}
+
+string getValidGender()
+{
+    string gender;
+
+    while(true)
+    {
+        cout << "Enter Gender (Male/Female/Other): ";
+        cin >> gender;
+
+        transform(gender.begin(), gender.end(), gender.begin(), ::tolower);
+
+        if(gender=="male" || gender=="female" || gender=="other")
+            return gender;
+
+        cout << "Invalid gender.\n";
+    }
+}
+
+string getValidPhone()
+{
+    string phone;
+
+    while(true)
+    {
+        cout << "Enter Phone Number: ";
+        cin >> phone;
+
+        if(phone.length()!=10)
+        {
+            cout << "Phone number must be exactly 10 digits.\n";
+            continue;
+        }
+
+        bool valid = true;
+
+        for(char c : phone)
+        {
+            if(!isdigit(c))
+            {
+                valid = false;
+                break;
+            }
+        }
+
+        if(valid)
+            return phone;
+
+        cout << "Phone number should contain only digits.\n";
+    }
+}
+
 int main() {
 
     // Login Register Functionality Implementation
@@ -293,24 +370,36 @@ int main() {
             case 2: {
                 displayAvailableTrains(trains, numTrains);
                 int trainChoice;
-                cout << "Enter the number of the train you want to book: ";
+                cout << "\n \n Enter the number of the train you want to book: ";
                 cin >> trainChoice;
                 if (trainChoice >= 1 && trainChoice <= numTrains) {
                     Train& selectedTrain = trains[trainChoice - 1];
                     if (selectedTrain.availableSeats > 0) {
                         string name, gender, phone;
                         int age;
-                        cout << "Enter your name: ";
-                        cin.ignore();
-                        getline(cin, name);
-                        cout << "Enter your age: ";
-                        cin >> age;
-                        cout << "Enter your gender: ";
-                        cin.ignore();
-                        getline(cin, gender);
-                        cout << "Enter your phone number: ";
-                        cin.ignore();
-                        getline(cin, phone);
+                        // cout << "Enter your name: ";
+                        // cin.ignore();
+                        // getline(cin, name);
+
+                        cout << "Enter your registered email: ";
+                        cin >> name;
+
+                        if (!emailExists(name))
+                        {
+                            cout << "Email not registered! Please register first.\n";
+                            break;
+                        }
+                        // cout << "Enter your age: ";
+                        // cin >> age;
+                        age = getValidAge();
+                        // cout << "Enter your gender: ";
+                        // cin.ignore();
+                        // getline(cin, gender);
+                        gender = getValidGender();
+                        // cout << "Enter your phone number: ";
+                        // cin.ignore();
+                        // getline(cin, phone);
+                        phone = getValidPhone();
                         int seatNumber = 0;
                         for (int i = 0; i < maxPassengers; ++i) {
                             if (passengers[i].bookedTrain == &selectedTrain && passengers[i].seatNumber > seatNumber) {
