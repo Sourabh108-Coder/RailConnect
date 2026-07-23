@@ -377,9 +377,6 @@ int main() {
                     if (selectedTrain.availableSeats > 0) {
                         string name, gender, phone;
                         int age;
-                        // cout << "Enter your name: ";
-                        // cin.ignore();
-                        // getline(cin, name);
 
                       cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -400,19 +397,13 @@ int main() {
                               continue;
                           }
 
-                          break;   // correct email found, continue booking
+                          break;   
                       }
-                        // cout << "Enter your age: ";
-                        // cin >> age;
+                       
                         age = getValidAge();
-                        // cout << "Enter your gender: ";
-                        // cin.ignore();
-                        // getline(cin, gender);
                         gender = getValidGender();
-                        // cout << "Enter your phone number: ";
-                        // cin.ignore();
-                        // getline(cin, phone);
                         phone = getValidPhone();
+                        
                         int seatNumber = 0;
                         for (int i = 0; i < maxPassengers; ++i) {
                             if (passengers[i].bookedTrain == &selectedTrain && passengers[i].seatNumber > seatNumber) {
