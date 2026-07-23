@@ -242,7 +242,7 @@ int getValidAge()
         if(cin.fail())
         {
             cin.clear();
-            cin.ignore(1000,'\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input.\n";
             continue;
         }
@@ -381,14 +381,27 @@ int main() {
                         // cin.ignore();
                         // getline(cin, name);
 
-                        cout << "Enter your registered email: ";
-                        cin >> name;
+                      cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                        if (!emailExists(name))
-                        {
-                            cout << "Email not registered! Please register first.\n";
-                            break;
-                        }
+                      while(true)
+                      {
+                          cout << "Enter your registered email: ";
+                          getline(cin, name);
+
+                          if(name.find(' ') != string::npos)
+                          {
+                              cout << "Email cannot contain spaces. Try again.\n";
+                              continue;
+                          }
+
+                          if(!emailExists(name))
+                          {
+                              cout << "Email not registered. Try again.\n";
+                              continue;
+                          }
+
+                          break;   // correct email found, continue booking
+                      }
                         // cout << "Enter your age: ";
                         // cin >> age;
                         age = getValidAge();
