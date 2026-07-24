@@ -150,12 +150,9 @@ These can be improved in future versions.
 * Unique booking ID or PNR generation
 * Train management (Add, Edit, Delete)
 * Admin dashboard
-* Better input validation
 * Improved seat allocation
 * Date and time of travel
 * Fare calculation
-* Database integration (MySQL/SQLite)
-* Graphical User Interface (GUI)
 
 ---
 
