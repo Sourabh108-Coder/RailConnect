@@ -6,15 +6,16 @@
 #include <algorithm>
 #include <cctype>
 
-
 using namespace std;
-class Ticket {
+class Ticket
+{
 public:
     string name;
 
     Ticket(string n) : name(n) {}
 };
-class Train : public Ticket {
+class Train : public Ticket
+{
 public:
     string source;
     string destination;
@@ -32,15 +33,16 @@ public:
     Train(string n, string src, string dest, int seats)
         : Ticket(n), source(src), destination(dest), totalSeats(seats), availableSeats(seats) {}
 };
-class Passenger : public Ticket {
+class Passenger : public Ticket
+{
 public:
     int age;
     string gender;
     int seatNumber;
     string phoneNumber;
-    Train* bookedTrain;  
+    Train *bookedTrain;
     Passenger() : Ticket(""), age(0), gender(""), seatNumber(0), phoneNumber(""), bookedTrain(nullptr) {}
-    Passenger(string n, int a, string g, int seat, string phone, Train* train)
+    Passenger(string n, int a, string g, int seat, string phone, Train *train)
         : Ticket(n), age(a), gender(g), seatNumber(seat), phoneNumber(phone), bookedTrain(train) {}
 };
 
@@ -74,14 +76,13 @@ void loadTrains(Train trains[], int &numTrains)
         ss >> seats;
 
         trains[numTrains++] = Train(name, source, destination, seats);
-
     }
 
     file.close();
 }
 
-
-int displayMenu() {
+int displayMenu()
+{
     int choice;
     cout << "\n\nRailway Management System" << endl;
     cout << "1. View Available Trains" << endl;
@@ -94,41 +95,65 @@ int displayMenu() {
     cin >> choice;
     return choice;
 }
-void displayAvailableTrains(const Train trains[], int numTrains) {
+
+// Admin Menus Display function
+int displayAdminMenu()
+{
+    int choice;
+
+    cout << "\n\n========== Admin Panel ==========" << endl;
+    cout << "1. View Admin Working" << endl;
+
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    return choice;
+}
+
+void displayAvailableTrains(const Train trains[], int numTrains)
+{
     cout << "Available Trains:" << endl;
     cout << "-----------------" << endl;
     cout << "Train No\tTrain Name\t\t Source\t\tDestination\t\tAvailable Seats" << endl;
-    for (int i = 0; i < numTrains; ++i) {
+    for (int i = 0; i < numTrains; ++i)
+    {
         cout << i + 1 << "\t\t" << trains[i].name << "\t" << trains[i].source << "\t" << trains[i].destination << "\t\t" << trains[i].availableSeats << endl;
     }
 }
-void displayBookedTickets(const Passenger* passengers, int numPassengers) {
+void displayBookedTickets(const Passenger *passengers, int numPassengers)
+{
     cout << "Booked Tickets:" << endl;
     cout << "-----------------" << endl;
     cout << "Seat No\t Name\tAge\tGender\tPhone Number\tTrain Name" << endl;
-    for (int i = 0; i < numPassengers; ++i) {
+    for (int i = 0; i < numPassengers; ++i)
+    {
         cout << passengers[i].seatNumber << "\t" << passengers[i].name << "\t" << passengers[i].age << "\t" << passengers[i].gender << "\t" << passengers[i].phoneNumber << "\t" << passengers[i].bookedTrain->name << endl;
     }
 }
-void writePassengerToFile(const Passenger& passenger) {
-    const string outputFileName = "new_passenger_records.txt"; 
+void writePassengerToFile(const Passenger &passenger)
+{
+    const string outputFileName = "new_passenger_records.txt";
     ofstream outputFile(outputFileName, ios::app);
-    if (!outputFile) {
+    if (!outputFile)
+    {
         cerr << "Error opening the file." << endl;
         return;
     }
     outputFile << passenger.seatNumber << "," << passenger.name << "," << passenger.age << "," << passenger.gender << "," << passenger.phoneNumber << "," << passenger.bookedTrain->name << endl;
     outputFile.close();
 }
-void readPassengersFromFile(Passenger* passengers, int& numPassengers, Train trains[], int numTrains) {
-    const string inputFileName = "new_passenger_records.txt"; 
+void readPassengersFromFile(Passenger *passengers, int &numPassengers, Train trains[], int numTrains)
+{
+    const string inputFileName = "new_passenger_records.txt";
     ifstream inputFile(inputFileName);
-    if (!inputFile) {
+    if (!inputFile)
+    {
         cerr << "Error opening the file." << endl;
         return;
     }
     string line;
-    while (getline(inputFile, line)) {
+    while (getline(inputFile, line))
+    {
         stringstream ss(line);
         int seat;
         string name, gender, phone, trainName;
@@ -140,15 +165,18 @@ void readPassengersFromFile(Passenger* passengers, int& numPassengers, Train tra
         ss.ignore();
         getline(ss, gender, ',');
         getline(ss, phone, ',');
-        getline(ss, trainName, ',');      
-        Train* bookedTrain = nullptr;
-        for (int i = 0; i < numTrains; ++i) {
-            if (trains[i].name == trainName) {
+        getline(ss, trainName, ',');
+        Train *bookedTrain = nullptr;
+        for (int i = 0; i < numTrains; ++i)
+        {
+            if (trains[i].name == trainName)
+            {
                 bookedTrain = &trains[i];
                 break;
             }
         }
-        if (bookedTrain != nullptr) {
+        if (bookedTrain != nullptr)
+        {
             passengers[numPassengers++] = Passenger(name, age, gender, seat, phone, bookedTrain);
         }
     }
@@ -158,20 +186,19 @@ void readPassengersFromFile(Passenger* passengers, int& numPassengers, Train tra
 bool validEmailFormat(string email)
 {
     // Check spaces
-    if(email.find(' ') != string::npos)
+    if (email.find(' ') != string::npos)
     {
         return false;
     }
 
     // Check @ and .
-    if(email.find('@') == string::npos || email.find('.') == string::npos)
+    if (email.find('@') == string::npos || email.find('.') == string::npos)
     {
         return false;
     }
 
     return true;
 }
-
 
 bool emailExists(string email)
 {
@@ -180,7 +207,7 @@ bool emailExists(string email)
 
     while (file >> mail >> pass)
     {
-        if ( mail == email)
+        if (mail == email)
         {
             return true;
         }
@@ -189,19 +216,18 @@ bool emailExists(string email)
     return false;
 }
 
-
 bool registerUser()
 {
-    string email,password;
+    string email, password;
 
     cout << "\n===== User Registration =====\n";
 
-    while(true)
+    while (true)
     {
         cout << "Enter Email: ";
         cin >> email;
 
-        if(!validEmailFormat(email))
+        if (!validEmailFormat(email))
         {
             cout << "Invalid email. Email should not contain spaces and must contain @ and .\n";
             continue;
@@ -210,10 +236,10 @@ bool registerUser()
         break;
     }
 
-    if(emailExists(email))
+    if (emailExists(email))
     {
-       cout << "Email already exists!\n";
-       return false;
+        cout << "Email already exists!\n";
+        return false;
     }
 
     cout << "Enter Password: ";
@@ -227,22 +253,21 @@ bool registerUser()
 
     cout << "Registration Successful!\n";
     return true;
-
 }
 
 bool loginUser()
 {
     string useremail, userpassword;
-    string email,password;
+    string email, password;
 
     cout << "\n========== User Login ==========\n";
 
-    while(true)
+    while (true)
     {
         cout << "Username: ";
         cin >> useremail;
 
-        if(!validEmailFormat(useremail))
+        if (!validEmailFormat(useremail))
         {
             cout << "Invalid email format. Try again.\n";
             continue;
@@ -279,7 +304,7 @@ int getValidAge()
         cout << "Enter your age: ";
         cin >> age;
 
-        if(cin.fail())
+        if (cin.fail())
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -287,7 +312,7 @@ int getValidAge()
             continue;
         }
 
-        if(age >= 1 && age <= 120)
+        if (age >= 1 && age <= 120)
             return age;
 
         cout << "Enter a valid age (1-120).\n";
@@ -298,14 +323,14 @@ string getValidGender()
 {
     string gender;
 
-    while(true)
+    while (true)
     {
         cout << "Enter Gender (Male/Female/Other): ";
         cin >> gender;
 
         transform(gender.begin(), gender.end(), gender.begin(), ::tolower);
 
-        if(gender=="male" || gender=="female" || gender=="other")
+        if (gender == "male" || gender == "female" || gender == "other")
             return gender;
 
         cout << "Invalid gender.\n";
@@ -316,12 +341,12 @@ string getValidPhone()
 {
     string phone;
 
-    while(true)
+    while (true)
     {
         cout << "Enter Phone Number: ";
         cin >> phone;
 
-        if(phone.length()!=10)
+        if (phone.length() != 10)
         {
             cout << "Phone number must be exactly 10 digits.\n";
             continue;
@@ -329,67 +354,104 @@ string getValidPhone()
 
         bool valid = true;
 
-        for(char c : phone)
+        for (char c : phone)
         {
-            if(!isdigit(c))
+            if (!isdigit(c))
             {
                 valid = false;
                 break;
             }
         }
 
-        if(valid)
+        if (valid)
             return phone;
 
         cout << "Phone number should contain only digits.\n";
     }
 }
 
-int main() {
+//  Admin functions
+bool adminLogin()
+{
+    string user, pass;
+    string fileUser, filePass;
+
+    cout << "Username: ";
+    cin >> user;
+
+    cout << "Password: ";
+    cin >> pass;
+
+    ifstream file("admin.txt");
+
+    while (file >> fileUser >> filePass)
+    {
+        if (user == fileUser && pass == filePass)
+        {
+            cout << "Admin Login Successful!\n";
+            return true;
+        }
+    }
+
+    cout << "Invalid Admin Credentials!\n";
+    return false;
+}
+
+int main()
+{
 
     // Login Register Functionality Implementation
 
     int option;
+    bool isAdmin = false;
 
     while (true)
     {
         cout << "\n=========== Railway Login System ===========" << endl;
         cout << "1. Register" << endl;
         cout << "2. Login" << endl;
-        cout << "3. Exit" << endl;
+        cout << "3. Admin Login" << endl;
+        cout << "4. Exit" << endl;
 
         cout << "Enter choice: ";
         cin >> option;
 
         if (option == 1)
         {
-            if(registerUser())
+            if (registerUser())
             {
                 break;
             }
         }
         else if (option == 2)
         {
-            if(loginUser())
+            if (loginUser())
             {
                 break;
             }
         }
         else if (option == 3)
         {
-            cout << "Thank you for using the Railway Management System. Goodbye!" << endl;   
+            if (adminLogin())
+            {
+                isAdmin = true;
+                break;
+            }
+        }
+        else if (option == 4)
+        {
+            cout << "Thank you for using the Railway Management System. Goodbye!" << endl;
             return 0;
         }
         else
         {
-          cout << "Invalid Choice!" << endl;
+            cout << "Invalid Choice!" << endl;
         }
     }
-    
 
     // RailConnect System Implementation
-    
-    const int maxTrains = 50;  //Add acc. to your choice
+
+    const int maxTrains = 50; // Add acc. to your choice
     const int maxPassengers = 100;
 
     Train trains[maxTrains];
@@ -397,74 +459,114 @@ int main() {
 
     loadTrains(trains, numTrains); // Trains loaded
 
-
-    Passenger* passengers = new Passenger[maxPassengers];
+    Passenger *passengers = new Passenger[maxPassengers];
     int numPassengers = 0;
     readPassengersFromFile(passengers, numPassengers, trains, numTrains);
-    while (true) {
-        int choice = displayMenu();
-        switch (choice) {
+    while (true)
+    {
+        // int choice = displayMenu();
+        int choice;
+
+        if (isAdmin)
+        {
+            choice = displayAdminMenu();
+        }
+        else
+        {
+            choice = displayMenu();
+        }
+
+        if (isAdmin)
+        {
+            switch(choice)
+            {
+                case 1:
+                    cout<<"Admin is working!";
+                    break;
+                    
+                default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+            }
+        }
+
+        else
+        {
+            switch (choice)
+            {
             case 1:
                 displayAvailableTrains(trains, numTrains);
                 break;
-            case 2: {
+            case 2:
+            {
                 displayAvailableTrains(trains, numTrains);
                 int trainChoice;
                 cout << "\n \n Enter the number of the train you want to book: ";
                 cin >> trainChoice;
-                if (trainChoice >= 1 && trainChoice <= numTrains) {
-                    Train& selectedTrain = trains[trainChoice - 1];
-                    if (selectedTrain.availableSeats > 0) {
+                if (trainChoice >= 1 && trainChoice <= numTrains)
+                {
+                    Train &selectedTrain = trains[trainChoice - 1];
+                    if (selectedTrain.availableSeats > 0)
+                    {
                         string name, gender, phone;
                         int age;
 
-                      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                      while(true)
-                      {
-                          cout << "Enter your registered email: ";
-                          getline(cin, name);
+                        while (true)
+                        {
+                            cout << "Enter your registered email: ";
+                            getline(cin, name);
 
-                          if(name.find(' ') != string::npos)
-                          {
-                              cout << "Email cannot contain spaces. Try again.\n";
-                              continue;
-                          }
+                            if (name.find(' ') != string::npos)
+                            {
+                                cout << "Email cannot contain spaces. Try again.\n";
+                                continue;
+                            }
 
-                          if(!emailExists(name))
-                          {
-                              cout << "Email not registered. Try again.\n";
-                              continue;
-                          }
+                            if (!emailExists(name))
+                            {
+                                cout << "Email not registered. Try again.\n";
+                                continue;
+                            }
 
-                          break;   
-                      }
-                       
+                            break;
+                        }
+
                         age = getValidAge();
                         gender = getValidGender();
                         phone = getValidPhone();
 
                         int seatNumber = 0;
-                        for (int i = 0; i < maxPassengers; ++i) {
-                            if (passengers[i].bookedTrain == &selectedTrain && passengers[i].seatNumber > seatNumber) {
+                        for (int i = 0; i < maxPassengers; ++i)
+                        {
+                            if (passengers[i].bookedTrain == &selectedTrain && passengers[i].seatNumber > seatNumber)
+                            {
                                 seatNumber = passengers[i].seatNumber;
                             }
                         }
                         seatNumber++;
-                        if (seatNumber <= selectedTrain.totalSeats) {
+                        if (seatNumber <= selectedTrain.totalSeats)
+                        {
                             cout << "Ticket booked successfully for train " << selectedTrain.name << " - Seat No: " << seatNumber << endl;
                             selectedTrain.availableSeats--;
 
                             passengers[numPassengers++] = Passenger(name, age, gender, seatNumber, phone, &selectedTrain);
 
                             writePassengerToFile(passengers[numPassengers - 1]);
-                        } else {
+                        }
+                        else
+                        {
                             cout << "Sorry, no seats available on this train." << endl;
                         }
-                    } else {
+                    }
+                    else
+                    {
                         cout << "Sorry, no seats available on this train." << endl;
                     }
-                } else {
+                }
+                else
+                {
                     cout << "Invalid train selection. Please try again." << endl;
                 }
                 break;
@@ -472,7 +574,8 @@ int main() {
             case 3:
                 displayBookedTickets(passengers, numPassengers);
                 break;
-            case 4: {
+            case 4:
+            {
                 string searchName;
                 cout << "Enter your name to search for your booked ticket: ";
                 cin.ignore();
@@ -481,33 +584,41 @@ int main() {
                 cout << "---------------------------------" << endl;
                 cout << "Seat No\tPassenger Name\tAge\tGender\tPhone Number\tTrain Name" << endl;
                 bool found = false;
-                for (int i = 0; i < numPassengers; ++i) {
-                    if (passengers[i].name == searchName) {
+                for (int i = 0; i < numPassengers; ++i)
+                {
+                    if (passengers[i].name == searchName)
+                    {
                         cout << passengers[i].seatNumber << "\t" << passengers[i].name << "\t" << passengers[i].age << "\t" << passengers[i].gender << "\t" << passengers[i].phoneNumber << "\t" << passengers[i].bookedTrain->name << endl;
                         found = true;
                     }
                 }
-                if (!found) {
+                if (!found)
+                {
                     cout << "No matching tickets found for passenger: " << searchName << endl;
                 }
                 break;
             }
-            case 5: {
+            case 5:
+            {
                 string cancelName;
                 cin.ignore();
                 cout << "Enter your name to cancel your booked ticket: ";
                 getline(cin, cancelName);
                 bool canceled = false;
-                for (int i = 0; i < numPassengers; ++i) {
-                    if (passengers[i].name == cancelName) {
-                        Train& bookedTrain = *passengers[i].bookedTrain;
+                for (int i = 0; i < numPassengers; ++i)
+                {
+                    if (passengers[i].name == cancelName)
+                    {
+                        Train &bookedTrain = *passengers[i].bookedTrain;
                         bookedTrain.availableSeats++;
-                            for (int j = i; j < numPassengers - 1; ++j) {
+                        for (int j = i; j < numPassengers - 1; ++j)
+                        {
                             passengers[j] = passengers[j + 1];
                         }
-                        numPassengers--;                      
+                        numPassengers--;
                         ofstream outputFile("new_passenger_records.txt");
-                        for (int j = 0; j < numPassengers; ++j) {
+                        for (int j = 0; j < numPassengers; ++j)
+                        {
                             outputFile << passengers[j].seatNumber << "," << passengers[j].name << "," << passengers[j].age << "," << passengers[j].gender << "," << passengers[j].phoneNumber << "," << passengers[j].bookedTrain->name << endl;
                         }
                         outputFile.close();
@@ -517,18 +628,20 @@ int main() {
                         break;
                     }
                 }
-                if (!canceled) {
+                if (!canceled)
+                {
                     cout << "No booking found for passenger: " << cancelName << ". Please enter a valid name." << endl;
                 }
                 break;
             }
             case 6:
-                cout << "Thank you for using the Railway Management System. Goodbye!" << endl;                
+                cout << "Thank you for using the Railway Management System. Goodbye!" << endl;
                 delete[] passengers;
                 return 0;
             default:
                 cout << "Invalid choice. Please try again." << endl;
                 break;
+            }
         }
     }
     return 0;
