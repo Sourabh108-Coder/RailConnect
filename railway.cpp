@@ -513,6 +513,9 @@ int main()
                 case 1:
                     displayAllUsers();
                     break;
+                case 2:
+                displayAvailableTrains(trains, numTrains);
+                break;
 
                 case 4:
                   cout << "Goodbye Admin!" << endl;
