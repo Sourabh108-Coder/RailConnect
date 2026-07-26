@@ -102,7 +102,11 @@ int displayAdminMenu()
     int choice;
 
     cout << "\n\n========== Admin Panel ==========" << endl;
-    cout << "1. View Admin Working" << endl;
+
+    cout << "1. View All Registered Users" << endl;
+    cout << "2. View All Trains" << endl;
+    cout << "3. View All Booked Tickets" << endl;
+    cout << "4. Exit" << endl;
 
     cout << "Enter your choice: ";
     cin >> choice;
@@ -397,6 +401,32 @@ bool adminLogin()
     return false;
 }
 
+// Display all users for admin
+void displayAllUsers()
+{
+    ifstream file("users.txt");
+
+    if (!file)
+    {
+        cout << "Unable to open users.txt\n";
+        return;
+    }
+
+    string email, password;
+
+    cout << "\n========== Registered Users ==========\n";
+    cout << "S.No\tEmail\n";
+
+    int count = 1;
+
+    while (file >> email >> password)
+    {
+        cout << count++ << "\t" << email << endl;
+    }
+
+    file.close();
+}
+
 int main()
 {
 
@@ -481,8 +511,13 @@ int main()
             switch(choice)
             {
                 case 1:
-                    cout<<"Admin is working!";
+                    displayAllUsers();
                     break;
+
+                case 4:
+                  cout << "Goodbye Admin!" << endl;
+                  delete[] passengers;
+                  return 0;
                     
                 default:
                 cout << "Invalid choice. Please try again." << endl;
