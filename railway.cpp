@@ -514,8 +514,12 @@ int main()
                     displayAllUsers();
                     break;
                 case 2:
-                displayAvailableTrains(trains, numTrains);
-                break;
+                    displayAvailableTrains(trains, numTrains);
+                    break;
+
+                case 3:
+                    displayBookedTickets(passengers, numPassengers);
+                    break;
 
                 case 4:
                   cout << "Goodbye Admin!" << endl;
