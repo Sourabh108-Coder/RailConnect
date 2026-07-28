@@ -519,18 +519,18 @@ int main()
     readPassengersFromFile(passengers, numPassengers, trains, numTrains);
     while (true)
     {
-        // int choice = displayMenu();
         int choice;
 
         if (isAdmin)
         {
-            choice = displayAdminMenu();
+            choice = displayAdminMenu(); // Admin Menu
         }
         else
         {
-            choice = displayMenu();
+            choice = displayMenu(); // User Menu
         }
 
+        // Admin Cases
         if (isAdmin)
         {
             switch(choice)
@@ -557,6 +557,7 @@ int main()
             }
         }
 
+        //  User Cases
         else
         {
             switch (choice)
