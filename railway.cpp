@@ -1,3 +1,4 @@
+// Importing Libraraies
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -6,7 +7,10 @@
 #include <algorithm>
 #include <cctype>
 
+// Starting of Main Program
 using namespace std;
+
+// Ticket Class
 class Ticket
 {
 public:
@@ -14,6 +18,8 @@ public:
 
     Ticket(string n) : name(n) {}
 };
+
+// Train Class
 class Train : public Ticket
 {
 public:
@@ -33,6 +39,8 @@ public:
     Train(string n, string src, string dest, int seats)
         : Ticket(n), source(src), destination(dest), totalSeats(seats), availableSeats(seats) {}
 };
+
+// Passenger Class
 class Passenger : public Ticket
 {
 public:
@@ -47,7 +55,6 @@ public:
 };
 
 // Function for loading trains data
-
 void loadTrains(Train trains[], int &numTrains)
 {
     ifstream file("trains.txt");
@@ -81,6 +88,7 @@ void loadTrains(Train trains[], int &numTrains)
     file.close();
 }
 
+// Function for displaying User Menu
 int displayMenu()
 {
     int choice;
