@@ -122,6 +122,7 @@ int displayAdminMenu()
     return choice;
 }
 
+// Function for display available trains
 void displayAvailableTrains(const Train trains[], int numTrains)
 {
     cout << "Available Trains:" << endl;
@@ -132,6 +133,8 @@ void displayAvailableTrains(const Train trains[], int numTrains)
         cout << i + 1 << "\t\t" << trains[i].name << "\t" << trains[i].source << "\t" << trains[i].destination << "\t\t" << trains[i].availableSeats << endl;
     }
 }
+
+// Functions for displaying Booked tickets
 void displayBookedTickets(const Passenger *passengers, int numPassengers)
 {
     cout << "Booked Tickets:" << endl;
@@ -142,6 +145,8 @@ void displayBookedTickets(const Passenger *passengers, int numPassengers)
         cout << passengers[i].seatNumber << "\t" << passengers[i].name << "\t" << passengers[i].age << "\t" << passengers[i].gender << "\t" << passengers[i].phoneNumber << "\t" << passengers[i].bookedTrain->name << endl;
     }
 }
+
+// Function for adding passengers to the file (new_passengers_records.txt)
 void writePassengerToFile(const Passenger &passenger)
 {
     const string outputFileName = "new_passenger_records.txt";
@@ -154,6 +159,8 @@ void writePassengerToFile(const Passenger &passenger)
     outputFile << passenger.seatNumber << "," << passenger.name << "," << passenger.age << "," << passenger.gender << "," << passenger.phoneNumber << "," << passenger.bookedTrain->name << endl;
     outputFile.close();
 }
+
+// Function for viewing passengers from the file (new_passengers_records.txt)
 void readPassengersFromFile(Passenger *passengers, int &numPassengers, Train trains[], int numTrains)
 {
     const string inputFileName = "new_passenger_records.txt";
@@ -195,6 +202,7 @@ void readPassengersFromFile(Passenger *passengers, int &numPassengers, Train tra
     inputFile.close();
 }
 
+// Function for checking email is valid or not
 bool validEmailFormat(string email)
 {
     // Check spaces
@@ -212,6 +220,7 @@ bool validEmailFormat(string email)
     return true;
 }
 
+// Function for checking the existing user
 bool emailExists(string email)
 {
     ifstream file("users.txt");
@@ -228,6 +237,7 @@ bool emailExists(string email)
     return false;
 }
 
+// Function for registeration (User)
 bool registerUser()
 {
     string email, password;
@@ -267,6 +277,7 @@ bool registerUser()
     return true;
 }
 
+// Function for login (User)
 bool loginUser()
 {
     string useremail, userpassword;
@@ -307,6 +318,7 @@ bool loginUser()
     return false;
 }
 
+// Function for checking age is valid or not
 int getValidAge()
 {
     int age;
@@ -331,6 +343,7 @@ int getValidAge()
     }
 }
 
+// Function for checking gender is valid or not
 string getValidGender()
 {
     string gender;
@@ -349,6 +362,7 @@ string getValidGender()
     }
 }
 
+// Function for checking phone is valid or not
 string getValidPhone()
 {
     string phone;
@@ -382,7 +396,9 @@ string getValidPhone()
     }
 }
 
-//  Admin functions
+//             =================== Admin functions ============================
+
+// Admin Login function
 bool adminLogin()
 {
     string user, pass;
@@ -435,11 +451,12 @@ void displayAllUsers()
     file.close();
 }
 
+
+// Main function 
 int main()
 {
 
     // Login Register Functionality Implementation
-
     int option;
     bool isAdmin = false;
 
