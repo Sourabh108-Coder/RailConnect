@@ -235,7 +235,8 @@ The application validates user input for:
 # 📸 Screenshots
 
 ---
-
+## Login Menu
+![Login Menu](screenshots/login-menu.png)
 
 
 ---
