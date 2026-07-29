@@ -235,41 +235,32 @@ The application validates user input for:
 # 📸 Screenshots
 
 ---
-## Login Menu
-![Login Menu](screenshots/login-menu.png)
-
-
----
-
-
+## Railway Login Menu
+![Login Menu](screenshots/login_menus.png)
 
 ---
-
-
-
----
-
-
+## User Login 
+![User Login](screenshots/user_login.png)
 
 ---
-
-
----
-
-
+## Admin Login
+![Admin Login](screenshots/admin_login.png)
 
 ---
-
-
-
----
-
+## View Available Trains (User)
+![View Trains](screenshots/available_trains_user.png)
 
 ---
+## Book Ticket (User)
+![Book Train Ticket](screenshots/book_ticket_user.png)
 
 ---
+## View Registered Users (Admin)
+![Registered Users](screenshots/view_users_admin.png)
 
-
+---
+## View Booked Tickets (Admin)
+![Booked Tickets](screenshots/view_users_admin.png)
 
 ---
 
